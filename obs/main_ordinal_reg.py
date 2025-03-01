@@ -2,8 +2,6 @@ from bert_ordinal_regression import BERTModel
 import torch
 import os
 import pickle
-import numpy as np
-import openpyxl
 import datetime
 
 from coral_pytorch.dataset import corn_label_from_logits
