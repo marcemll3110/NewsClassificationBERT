@@ -8,11 +8,11 @@ from helper_functions import save_df_as_xlsx
 
 
 websites = ["https://www.hydrogenfuelnews.com",
-        #"https://h2lac.org/noticias",
-        #"https://www.globalhydrogenreview.com",
-        #"https://www.elpais.com.uy/sostenible",
-        #"https://bioenergytimes.com/",
-        #"https://www.hydrogeninsight.com/latest",
+        "https://h2lac.org/noticias",
+        "https://www.globalhydrogenreview.com",
+        "https://www.elpais.com.uy/sostenible",
+        "https://bioenergytimes.com/",
+        "https://www.hydrogeninsight.com/latest",
         "https://www.energiaestrategica.com/"]
 
 folder_path = os.path.dirname(__file__)
@@ -24,7 +24,7 @@ news_folder_path = os.path.join(folder_path,"news")
 
 if __name__ == "__main__":
     
-    news_dataframe = scrape_and_save(websites,news_folder_path, max_amount_of_news=2, keywords=["hydrogen"])
+    news_dataframe = scrape_and_save(websites,news_folder_path, max_amount_of_news=20)
     
     
     root = os.getcwd()
@@ -32,12 +32,11 @@ if __name__ == "__main__":
     
     
     
-    filtered_excel_path = os.path.join(root, "news", "2025-02-11_filtered_news.xlsx")
     excel_path = os.path.join(root, "news", f"{datetime.datetime.today().strftime('%Y-%m-%d')}_news.xlsx")
     filtered_excel_path = os.path.join(root, "news", f"{datetime.datetime.today().strftime('%Y-%m-%d')}_filtered_news.xlsx")
 
     model_path = os.path.join(root, "models")
-    checkpoint_path = os.path.join(root, "models", "best_model.pt")
+    checkpoint_path = os.path.join(root, "models", "V1_smallest_val_loss.pt")
 
     
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
@@ -46,11 +45,11 @@ if __name__ == "__main__":
     
     
 
-    dataset_path = os.path.join(root, "dataset","dataset_complete.pkl")
-    #b.load_checkpoint(checkpoint_path)
-    b.train_regression_model(dataset_path,checkpoint_dir=model_path,num_epochs=25)
+    #dataset_path = os.path.join(root, "dataset","dataset_complete.pkl")
+    b.load_checkpoint(checkpoint_path)
+    #b.train_regression_model(dataset_path,checkpoint_dir=model_path,num_epochs=25)
     
-    #b.model.eval()
+    b.model.eval()
 
 
 
@@ -65,7 +64,7 @@ if __name__ == "__main__":
     print(news_dataframe)
     
     # filter the news by rating
-    filtered_news = news_dataframe[news_dataframe["ratings"] > 0.5]
+    filtered_news = news_dataframe[news_dataframe["ratings"] > 0.45]
     save_df_as_xlsx(news_dataframe,excel_path) # rewrite the excel file with the ratings
     save_df_as_xlsx(filtered_news,filtered_excel_path) # save the filtered news
     

@@ -77,8 +77,13 @@ def find_news_article_titles(website_url,txt_write,max_amount_of_news,keywords):
 
     
     #To be tested locally at home
-    req = requests.get(website_url)
-    website = req.text
+    try:
+        req = requests.get(website_url)
+        website = req.text
+    except:
+        print("Could not access the website")
+        return news
+            
     soup = bs4.BeautifulSoup(website)
 
     
