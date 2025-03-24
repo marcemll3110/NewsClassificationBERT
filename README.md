@@ -32,7 +32,7 @@ Two different approaches were tested:
 
 It is hard to classify and explain what makes a news article "interesting" versus "very interesting." However, in the case of regression, the model seems to learn that certain words should increase the rating of an article. 
 
-For example, the creator is currently based in **Uruguay**. The neural network recognized that articles with the keyword **"Uruguay"** should have a higher score than articles mentioning other countries. 
+For example, the person that graded the articles is currently based in **Uruguay**. The neural network recognized that articles with the keyword **"Uruguay"** should have a higher score than articles mentioning other countries. 
 
 A simple test was carried out:
 - An invented title, not seen by the model, was graded twice:
